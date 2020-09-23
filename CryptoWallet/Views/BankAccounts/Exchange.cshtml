@@ -1,0 +1,66 @@
+﻿@model CryptoWallet.Models.ExchangeViewModel
+@{
+    ViewBag.Title = "Exchange";
+}
+
+
+<h2>Exchange</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    if (Model.Accounts.Count() >= 2 || Model.Amount > 10000)
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.CurrencyFrom, new { @class = "col-md-2 control-label" })
+            @Html.DropDownListFor(m => m.CurrencyFrom, Model.Accounts, "-", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CurrencyFrom, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CurrencyTo, new { @class = "col-md-2 control-label" })
+            @Html.DropDownListFor(m => m.CurrencyTo, Model.Accounts, "-", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CurrencyTo, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Amount, new { @class = "col-md-2 control-label" })
+            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" value="Exchange" class="btn btn-primary" />
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div>You need two accounts or more.</div>
+        <br />
+        @Html.ActionLink("Open An Account", "OpenAccount", "BankAccounts", new { @class = "btn btn-primary" })
+
+    }
+    
+}
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        var $FromCurrency = $("select[name='CurrencyFrom']");
+        var $ToCurrency = $("select[name='CurrencyTo']");
+
+        $FromCurrency.change(function () {
+            $ToCurrency.find('option').prop("disabled", false);
+            var selectedItem = $(this).val();
+            if (selectedItem) {
+                $ToCurrency.find('option[value="' + selectedItem + '"]').hide();
+            }
+        });
+
+    </script>
+}
+
+
+

@@ -1,0 +1,24 @@
+﻿@model CryptoWallet.Models.OpenAccountViewModel
+@{
+    ViewBag.Title = "Open Account";
+}
+
+<h2>OpenAccount</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewCurrency, new { @class = "col-md-2 control-label" })
+        @Html.DropDownListFor(m => m.NewCurrency, Model.UnopenedAccounts, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NewCurrency, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <input type="submit" value="Open Account" class="btn btn-primary" />
+        </div>
+
+    </div>
+}

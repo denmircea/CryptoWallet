@@ -1,0 +1,45 @@
+﻿@model List<CurrencyRateViewModel>
+@{
+    ViewBag.Title = "Home";
+}
+<br />
+<br />
+<h1>CryptoWallet Transfer</h1>
+<p class="lead">ASP.NET</p>
+
+@Html.Partial("StyleTablePartial")
+<table id="TableAccounts">
+    <tr>
+        <th style="background-color:#e02e2e">From \ To</th>
+        @foreach (var item in Model)
+        {
+            <th>@item.Currency</th>
+        }
+    </tr>
+    @foreach (var from in Model)
+    {
+        <tr>
+            <th>@from.Currency</th>
+            @foreach (var to in Model)
+            {
+                if (from.Currency != to.Currency)
+                {
+                    <td>@((to.Rate * ((decimal)1.0000000 / from.Rate)).ToString("n5"))</td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
+            }
+
+        </tr>
+    }
+</table>
+
+<br />
+<br />
+<p><a href="https://www.facebook.com/mirceadenis22" class="btn btn-primary btn-lg">Facebook &raquo;</a></p>
+
+
+
+

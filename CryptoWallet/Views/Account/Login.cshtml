@@ -1,0 +1,39 @@
+﻿@model  CryptoWallet.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<br />
+<br />
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+        @Html.ValidationMessageFor(bn => bn.Username, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(bn => bn.Password, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <input type="submit" value="Log in" class="btn btn-default breadcrumb" />
+        </div>
+    </div>
+
+    @Html.ActionLink("Create Account", "Register", "", new { @class = "btn btn-primary" })
+
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

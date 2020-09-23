@@ -1,0 +1,22 @@
+﻿@model CryptoWallet.Models.DepositViewModel
+@{
+    ViewBag.Title = "Deposit";
+}
+
+<h2>Deposit in EUR</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.Amount, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(bn => bn.Amount, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <input type="submit" value="Deposit" class="btn btn-primary" />
+        </div>
+    </div>
+}
+

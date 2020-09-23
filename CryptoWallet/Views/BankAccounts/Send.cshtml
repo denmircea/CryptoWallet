@@ -1,0 +1,41 @@
+﻿@model CryptoWallet.Models.SendViewModel
+@{
+    ViewBag.Title = "Send to another account";
+}
+
+<h2>Send</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SenderAccountId, new { @class = "col-md-2 control-label" })
+        @Html.DropDownListFor(m => m.SenderAccountId, Model.SenderAccounts, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SenderAccountId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ReceiverName, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.ReceiverName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ReceiverName, "", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Amount, new { @class = "col-md-2 control-label" })
+        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2">
+            <input type="submit" value="Send" class="btn btn-primary" />
+        </div>
+
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

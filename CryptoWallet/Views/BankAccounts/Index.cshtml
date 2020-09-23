@@ -1,0 +1,68 @@
+﻿@model BankAccountViewModelTest
+
+@{
+    ViewBag.Title = "Index"; 
+}
+@Html.Partial("StyleTablePartial")
+<!-- Pentru stilul tabelului  -->
+    <h2>Bank Accounts  <img src="~/fonts/bitcoin.svg" /></h2>
+@Html.ActionLink("Deposit", "Deposit", "BankAccounts", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Send to friend", "Send", "BankAccounts", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("My transactions", "Transactions", "BankAccounts", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Open An Account", "OpenAccount", "BankAccounts", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Exchange", "Exchange", "BankAccounts", null, new { @class = "btn btn-primary" })
+
+
+
+<br />
+<h2>My Accounts</h2>
+
+
+@if (Model.Lista.Count() != 0)
+{
+
+    <table id="TableAccounts">
+        <tr>
+            <th>Amount</th>
+            <th colspan="2">Currency</th>
+        </tr>
+
+
+        @{decimal sum = 0; }
+        @foreach (var item in Model.Lista)
+        {
+            <tr>
+                <td>@item.Amount</td>
+                <td>@item.Currency</td>
+            </tr>
+            sum += item.Amount * ((decimal)1.000000 / item.CurrencyRate);
+        }
+        <tr>
+            <th>Total: @sum.ToString("n5") EUR</th>
+            @if (sum < @Model.sumDeposits && Model.sumDeposits - sum > (decimal)0.0000000001)
+            {
+                <th rowspan="2" style="background-color:#ff0000">Loss: @(((decimal)100 / (sum / (Model.sumDeposits - sum))).ToString("n5"))%</th>
+            }
+            else if (sum > Model.sumDeposits && sum - Model.sumDeposits > (decimal)0.0000000001)
+            {
+                <th rowspan="2" style="background-color:#00ff21">Profit: @(((decimal)100 / (sum / (-Model.sumDeposits + sum))).ToString("n5"))%</th>
+            }
+            else
+            {
+                <th rowspan="2">No profit</th>
+            }
+
+        </tr>
+        <tr><th>Total investments: @Model.sumDeposits.ToString("n5") EUR</th></tr>
+    </table>
+
+}
+else
+{
+    <div> You need an account for this section.</div>
+}
+
+
+
+
+
